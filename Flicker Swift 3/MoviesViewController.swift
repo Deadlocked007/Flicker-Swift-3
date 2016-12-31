@@ -41,11 +41,14 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         collectionView?.delegate = self
         refreshControl.addTarget(self, action: #selector(MoviesViewController.loadMovies), for: UIControlEvents.valueChanged)
         collectionView?.insertSubview(refreshControl, at: 0)
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         loadMovies()
     }
     
     func loadMovies() {
+        if !refreshControl.isRefreshing {
+            MBProgressHUD.showAdded(to: self.view, animated: true)
+        }
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = URLRequest(url: url!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
