@@ -87,8 +87,9 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         movies = tempData
         filteredData = searchText.isEmpty ? tempData : movies.filter({ (movie: Movie?) -> Bool in
             let title = movie?.title
+            let overview = movie?.overview
             
-            return (title?.range(of: searchText, options: .caseInsensitive) != nil)
+            return (title?.range(of: searchText, options: .caseInsensitive) != nil || overview?.range(of: searchText, options: .caseInsensitive) != nil)
         })
         
         movies = filteredData
