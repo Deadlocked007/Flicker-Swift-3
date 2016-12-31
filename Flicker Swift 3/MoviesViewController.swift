@@ -11,11 +11,15 @@ import SwiftyJSON
 import MBProgressHUD
 import AFNetworking
 
-class MoviesViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class MoviesViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
     var movies: [Movie?] = []
-    let errorView = UIView()
+    var tempData: [Movie?] = []
+    var filteredData: [Movie?] = []
+    
+    let errorButton = UIButton(type: UIButtonType.custom)
     let refreshControl = UIRefreshControl()
+    var searchBar: UISearchBar?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +29,15 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         
         
         // Do any additional setup after loading the view.
-        errorView.frame = CGRect(x: 0, y: 64, width: self.view.frame.width, height: 40)
-        errorView.backgroundColor = UIColor.blue
-        errorView.isHidden = true
-        errorView.isUserInteractionEnabled = true
+        errorButton.frame = CGRect(x: 0, y: 64, width: self.view.frame.width, height: 40)
+        errorButton.backgroundColor = UIColor(red: 0.24, green: 0.24, blue: 0.24, alpha: 0.9)
+        errorButton.setTitle("⚠️ Network Error", for: .normal)
+        errorButton.isHidden = true
+        errorButton.isUserInteractionEnabled = true
         let errorTouch = UITapGestureRecognizer(target: self, action: #selector(MoviesViewController.loadMovies))
 
-        errorView.addGestureRecognizer(errorTouch)
-        self.view.addSubview(self.errorView)
+        errorButton.addGestureRecognizer(errorTouch)
+        self.view.addSubview(self.errorButton)
         collectionView?.delegate = self
         refreshControl.addTarget(self, action: #selector(MoviesViewController.loadMovies), for: UIControlEvents.valueChanged)
         collectionView?.insertSubview(refreshControl, at: 0)
@@ -56,9 +61,9 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
                     self.movies.append(Movie(json: movie))
                 }
                 self.collectionView?.reloadData()
-                self.errorView.isHidden = true
+                self.errorButton.isHidden = true
             } else {
-                self.errorView.isHidden = false
+                self.errorButton.isHidden = false
                 
             }
             self.refreshControl.endRefreshing()
@@ -67,6 +72,38 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         task.resume()
     }
     
+    
+    @IBAction func onSearch(_ sender: Any) {
+        searchBar = UISearchBar.init(frame: CGRect(x: 0, y: 10, width: (self.navigationController?.navigationBar.bounds.size.width)!, height: (self.navigationController?.navigationBar.bounds.size.height)!/2))
+        searchBar!.delegate = self
+        searchBar?.showsCancelButton = true
+        searchBar!.tag = 1
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+        self.navigationController?.navigationBar.addSubview(searchBar!)
+        tempData = movies
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        movies = tempData
+        filteredData = searchText.isEmpty ? tempData : movies.filter({ (movie: Movie?) -> Bool in
+            let title = movie?.title
+            
+            return (title?.range(of: searchText, options: .caseInsensitive) != nil)
+        })
+        
+        movies = filteredData
+        
+        collectionView!.reloadData()
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        movies = tempData
+        collectionView!.reloadData()
+        searchBar.resignFirstResponder()
+        self.navigationItem.rightBarButtonItem?.customView?.isHidden = false
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 0.0, green: 122.0/225.0, blue: 1.0, alpha: 1.0)
+        self.navigationController?.navigationBar.viewWithTag(1)?.removeFromSuperview()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Movies View Controller-->
+        <!--Flicker-->
         <scene sceneID="kDz-qc-Enn">
             <objects>
                 <collectionViewController id="zbe-sL-gD9" customClass="MoviesViewController" customModule="Flicker_Swift_3" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,7 +52,13 @@
                             <outlet property="delegate" destination="zbe-sL-gD9" id="Ehc-sp-90b"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="6Cg-Ge-uVr"/>
+                    <navigationItem key="navigationItem" title="Flicker" id="6Cg-Ge-uVr">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="qcw-ck-lVd">
+                            <connections>
+                                <action selector="onSearch:" destination="zbe-sL-gD9" id="WPL-cv-w06"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1n-tt-X3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
