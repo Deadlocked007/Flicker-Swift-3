@@ -7,7 +7,7 @@ target 'Flicker Swift 3' do
 
   # Pods for Flicker Swift 3
   pod ‘SwiftyJSON’
-  pod 'AlamofireImage'
   pod 'MBProgressHUD'
+  pod 'AFNetworking'
   
 end
