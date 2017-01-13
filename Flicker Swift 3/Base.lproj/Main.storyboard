@@ -31,8 +31,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="181" height="252"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wx4-3n-iMA">
-                                            <rect key="frame" x="0.0" y="0.0" width="182" height="252"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wx4-3n-iMA">
+                                            <rect key="frame" x="0.0" y="0.0" width="181" height="252"/>
                                         </imageView>
                                     </subviews>
                                 </view>
@@ -44,6 +44,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="posterView" destination="wx4-3n-iMA" id="xJI-WZ-wAv"/>
+                                    <segue destination="wXq-CU-1NH" kind="show" identifier="detailSegue" id="T7B-dC-7xm"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -63,6 +64,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1n-tt-X3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1008.8" y="169.56521739130437"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="TIi-VG-xQV">
+            <objects>
+                <viewController id="wXq-CU-1NH" customClass="DetailViewController" customModule="Flicker_Swift_3" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="chE-mQ-vc3"/>
+                        <viewControllerLayoutGuide type="bottom" id="IIN-35-NoH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e5e-Sd-c6B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TKh-Xb-VQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1753" y="170"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HAn-tG-apM">
