@@ -12,6 +12,7 @@ import SwiftyJSON
 class Movie: NSObject {
     
     let baseURL = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
+    var image: String = ""
     var title: String = ""
     var imageURL: String = ""
     var overview: String = ""
@@ -19,7 +20,8 @@ class Movie: NSObject {
     
     init(json: JSON) {
         title = json["title"].stringValue
-        imageURL = baseURL + json["poster_path"].stringValue
+        image = json["poster_path"].stringValue
+        imageURL = baseURL + image
         overview = json["overview"].stringValue
         language = json["original_language"].stringValue
     }

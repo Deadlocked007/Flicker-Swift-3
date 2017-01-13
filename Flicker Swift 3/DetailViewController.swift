@@ -10,7 +10,10 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var posterView: UIImageView!
     var movie:Movie?
+    
+    let lowRes:String = "https://image.tmdb.org/t/p/w45"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +36,40 @@ class DetailViewController: UIViewController {
     }
 
     func setup(movie: Movie) {
+        let lowResURL = URL(string: lowRes + movie.image)!
+        let imageURL = URL(string: movie.imageURL)!
+        print(lowResURL)
+        print(imageURL)
+        let lowResURLR = URLRequest(url: lowResURL)
+        let imageURLR = URLRequest(url: imageURL)
         
-    }
+        posterView.setImageWith(lowResURLR, placeholderImage: nil, success: { (request, response, image) in
+            self.posterView.alpha = 0.0
+            self.posterView.image = image
+            
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                
+                self.posterView.alpha = 1.0
+                
+            }, completion: { (sucess) -> Void in
+                
+                self.posterView.setImageWith(imageURLR, placeholderImage: image, success: { (request, response, finalImage) in
+                    
+                    self.posterView.image = finalImage
+                    
+                }, failure: { (request, response, error) in
+                    
+                    print(error.localizedDescription)
+                    
+                })
+            })
+        }) { (request, response, error) in
+            
+            print(error.localizedDescription)
+            
+        }
     
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

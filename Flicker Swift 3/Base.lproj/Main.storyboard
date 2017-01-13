@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -44,7 +46,10 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="posterView" destination="wx4-3n-iMA" id="xJI-WZ-wAv"/>
-                                    <segue destination="wXq-CU-1NH" kind="show" identifier="detailSegue" id="T7B-dC-7xm"/>
+                                    <segue destination="wXq-CU-1NH" kind="show" identifier="detailSegue" id="T7B-dC-7xm">
+                                        <segue key="commit" inheritsFrom="parent" id="cHL-rI-LdY"/>
+                                        <segue key="preview" inheritsFrom="commit" id="PNY-4F-SCw"/>
+                                    </segue>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -76,12 +81,28 @@
                     <view key="view" contentMode="scaleToFill" id="e5e-Sd-c6B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n6m-hq-oX1">
+                                <rect key="frame" x="0.0" y="64" width="375" height="562.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="n6m-hq-oX1" secondAttribute="height" multiplier="1:1.5" id="fI5-3q-gbd"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="n6m-hq-oX1" firstAttribute="top" secondItem="chE-mQ-vc3" secondAttribute="bottom" id="Moh-5f-vlX"/>
+                            <constraint firstItem="n6m-hq-oX1" firstAttribute="leading" secondItem="e5e-Sd-c6B" secondAttribute="leading" id="gYa-eK-USI"/>
+                            <constraint firstAttribute="trailing" secondItem="n6m-hq-oX1" secondAttribute="trailing" id="rny-Jk-cm2"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="posterView" destination="n6m-hq-oX1" id="dZW-n8-PZU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TKh-Xb-VQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1753" y="170"/>
+            <point key="canvasLocation" x="1752.8" y="169.56521739130437"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HAn-tG-apM">
@@ -102,4 +123,7 @@
             <point key="canvasLocation" x="69.599999999999994" y="169.56521739130437"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="T7B-dC-7xm"/>
+    </inferredMetricsTieBreakers>
 </document>
