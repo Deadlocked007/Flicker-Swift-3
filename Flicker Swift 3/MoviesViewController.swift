@@ -20,9 +20,19 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
     let errorButton = UIButton(type: UIButtonType.custom)
     let refreshControl = UIRefreshControl()
     var searchBar: UISearchBar?
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
+    var page = 1
+    
+    var baseURL = "https://api.themoviedb.org/3/movie/now_playing?api_key="
+    let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.restorationIdentifier! == "TopRated" {
+            baseURL = "https://api.themoviedb.org/3/movie/top_rated?api_key="
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,25 +49,41 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         errorButton.addGestureRecognizer(errorTouch)
         self.view.addSubview(self.errorButton)
         collectionView?.delegate = self
+        
         refreshControl.addTarget(self, action: #selector(MoviesViewController.loadMovies), for: UIControlEvents.valueChanged)
         collectionView?.insertSubview(refreshControl, at: 0)
+        
+        let frame = CGRect(x: 0, y: collectionView!.contentSize.height, width: collectionView!.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        collectionView!.addSubview(loadingMoreView!)
+        
+        var insets = collectionView!.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        collectionView!.contentInset = insets
         
         loadMovies()
     }
     
     func loadMovies() {
-        if !refreshControl.isRefreshing {
+        if !refreshControl.isRefreshing && !isMoreDataLoading {
             MBProgressHUD.showAdded(to: self.view, animated: true)
         }
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        
+        if refreshControl.isRefreshing {
+            page = 1
+            self.movies = []
+            collectionView?.reloadData()
+        }
+        
+        let url = URL(string: "\(baseURL)\(apiKey)&page=\(page)")
         let request = URLRequest(url: url!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task: URLSessionDataTask = session.dataTask(with: request as URLRequest,completionHandler: { (dataOrNil, response, error) in
             
             if let data = dataOrNil {
-                self.movies = []
+                
                 let json = JSON(data: data)
                 let movieJSON = json["results"].arrayValue
                 for movie in movieJSON {
@@ -71,10 +97,12 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
             }
             self.refreshControl.endRefreshing()
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.isMoreDataLoading = false
+            self.loadingMoreView!.stopAnimating()
         })
         task.resume()
+        
     }
-    
     
     @IBAction func onSearch(_ sender: Any) {
         searchBar = UISearchBar.init(frame: CGRect(x: 0, y: 10, width: (self.navigationController?.navigationBar.bounds.size.width)!, height: (self.navigationController?.navigationBar.bounds.size.height)!/2))
@@ -83,6 +111,7 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         searchBar!.tag = 1
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         self.navigationController?.navigationBar.addSubview(searchBar!)
+        searchBar?.becomeFirstResponder()
         tempData = movies
     }
     
@@ -99,6 +128,7 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         
         collectionView!.reloadData()
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         movies = tempData
@@ -107,6 +137,26 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         self.navigationItem.rightBarButtonItem?.customView?.isHidden = false
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 0.0, green: 122.0/225.0, blue: 1.0, alpha: 1.0)
         self.navigationController?.navigationBar.viewWithTag(1)?.removeFromSuperview()
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            
+            let scrollViewContentHeight = collectionView?.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight! - (collectionView?.bounds.size.height)!
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && (collectionView?.isDragging)!) {
+                
+                isMoreDataLoading = true
+                
+                let frame = CGRect(x: 0, y:collectionView!.contentSize.height, width: collectionView!.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                page += 1
+                loadMovies()
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -127,6 +177,15 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
             let movie = movies[indexPath.row]
             vc.movie = movie
         }
+        guard let searchBar = searchBar else {
+            return
+        }
+        
+        movies = tempData
+        searchBar.resignFirstResponder()
+        self.navigationItem.rightBarButtonItem?.customView?.isHidden = false
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 0.0, green: 122.0/225.0, blue: 1.0, alpha: 1.0)
+        self.navigationController?.navigationBar.viewWithTag(1)?.removeFromSuperview()
         
      }
     
