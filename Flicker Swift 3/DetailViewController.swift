@@ -10,6 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var posterView: UIImageView!
     var movie:Movie?
     
@@ -18,6 +19,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        scrollView.contentSize = CGSize(width: self.view.bounds.width, height: 1500)
         // Do any additional setup after loading the view.
         guard let movie = movie else {
             let errorAlert = UIAlertController(title: "Error", message: "There was an issue loading the movie please try again later.", preferredStyle: .alert)
