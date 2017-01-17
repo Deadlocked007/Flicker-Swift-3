@@ -17,6 +17,7 @@ class Movie: NSObject {
     var imageURL: String = ""
     var overview: String = ""
     var language: String = ""
+    var rating: Double = 0.0
     
     init(json: JSON) {
         title = json["title"].stringValue
@@ -24,6 +25,8 @@ class Movie: NSObject {
         imageURL = baseURL + image
         overview = json["overview"].stringValue
         language = json["original_language"].stringValue
+        rating = json["vote_count"].doubleValue
+        
     }
     
     /*

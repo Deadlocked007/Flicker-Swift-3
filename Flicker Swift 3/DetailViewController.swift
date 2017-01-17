@@ -10,16 +10,29 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var infoConstraint: NSLayoutConstraint!
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var posterView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
     var movie:Movie?
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var localLabel: UILabel!
+    @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var smallView: UIImageView!
+    
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var doge1View: UIImageView!
+    @IBOutlet weak var doge2View: UIImageView!
+    @IBOutlet weak var doge3View: UIImageView!
+    
+    @IBOutlet weak var videoView: UIWebView!
     
     let lowRes:String = "https://image.tmdb.org/t/p/w45"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        scrollView.contentSize = CGSize(width: self.view.bounds.width, height: 1500)
         // Do any additional setup after loading the view.
         guard let movie = movie else {
             let errorAlert = UIAlertController(title: "Error", message: "There was an issue loading the movie please try again later.", preferredStyle: .alert)
@@ -33,8 +46,17 @@ class DetailViewController: UIViewController {
             
             return
         }
-        
+        setupScrollView()
         setup(movie: movie)
+    }
+    
+    func setupScrollView() {
+
+        let constant = self.view.frame.size.height - UIApplication.shared.statusBarFrame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - (self.tabBarController?.tabBar.frame.size.height)! - titleLabel.frame.size.height - 10
+        
+        infoConstraint.constant = constant
+        // Content size
+        self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: 2500)
     }
 
     func setup(movie: Movie) {
@@ -70,6 +92,23 @@ class DetailViewController: UIViewController {
             print(error.localizedDescription)
             
         }
+        
+        let smallImageURL = URL(string: movie.imageURL)
+        smallView.setImageWith(smallImageURL!)
+        
+        let rating = movie.rating
+        ratingLabel.text = "\(rating)/10"
+        
+        
+        if rating > 3.3 {
+            doge2View.isHidden = false
+        }
+        
+        if rating > 6.6 {
+            doge3View.isHidden = false
+        }
+
+
     
     }
     override func didReceiveMemoryWarning() {
