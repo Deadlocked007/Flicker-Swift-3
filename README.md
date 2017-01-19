@@ -83,8 +83,12 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] User restoration id to use same viewcontroller file for both top playing and now playing.
-- [x] Peek and pop segue
-- [x] Infinite scrolling
+- [x] Peek and pop segue.
+- [x] Infinite scrolling.
+- [ ] Rating movies.
+    - [ ] Implement user authetication
+- [x] Show related movies in horizontally scrolling UICollectionView
+- [x] Load more information about movie.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
