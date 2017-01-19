@@ -24,14 +24,13 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
     var loadingMoreView:InfiniteScrollActivityView?
     var page = 1
     
-    var baseURL = "https://api.themoviedb.org/3/movie/now_playing?api_key="
-    let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+    var baseURL = "now_playing"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if self.restorationIdentifier! == "TopRated" {
-            baseURL = "https://api.themoviedb.org/3/movie/top_rated?api_key="
+            baseURL = "top_rated"
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -75,32 +74,23 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
             self.movies = []
             collectionView?.reloadData()
         }
-        
-        let url = URL(string: "\(baseURL)\(apiKey)&page=\(page)")
-        let request = URLRequest(url: url!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        let task: URLSessionDataTask = session.dataTask(with: request as URLRequest,completionHandler: { (dataOrNil, response, error) in
+        MovieClient.shared.getMovies(endpoint: baseURL, page: page, success: { (movies) in
+            self.movies = self.movies + movies
+            self.collectionView?.reloadData()
             
-            if let data = dataOrNil {
-                
-                let json = JSON(data: data)
-                let movieJSON = json["results"].arrayValue
-                for movie in movieJSON {
-                    self.movies.append(Movie(json: movie))
-                }
-                self.collectionView?.reloadData()
-                self.errorButton.isHidden = true
-            } else {
-                self.errorButton.isHidden = false
-                
-            }
+            self.errorButton.isHidden = true
             self.refreshControl.endRefreshing()
             MBProgressHUD.hide(for: self.view, animated: true)
             self.isMoreDataLoading = false
             self.loadingMoreView!.stopAnimating()
-        })
-        task.resume()
+        }) { (error) in
+            print(error.localizedDescription)
+            self.errorButton.isHidden = false
+            self.refreshControl.endRefreshing()
+            MBProgressHUD.hide(for: self.view, animated: true)
+            self.isMoreDataLoading = false
+            self.loadingMoreView!.stopAnimating()
+        }
         
     }
     
@@ -176,6 +166,7 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
         if let indexPath = collectionView?.indexPath(for: cell) {
             let movie = movies[indexPath.row]
             vc.movie = movie
+            vc.id = movie?.id
         }
         guard let searchBar = searchBar else {
             return

@@ -10,6 +10,7 @@
 		C72C45211E292450000D0A90 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72C45201E292450000D0A90 /* DetailViewController.swift */; };
 		C737D42A1E2A077100080150 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737D4291E2A077100080150 /* MainTabController.swift */; };
 		C737D42C1E2A132D00080150 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C737D42B1E2A132D00080150 /* InfiniteScrollActivityView.swift */; };
+		C74B1E8D1E30886D001DD3CB /* MovieClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74B1E8C1E30886D001DD3CB /* MovieClient.swift */; };
 		C7E1A97D1E172CF300FD6851 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E1A97C1E172CF300FD6851 /* AppDelegate.swift */; };
 		C7E1A9821E172CF300FD6851 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7E1A9801E172CF300FD6851 /* Main.storyboard */; };
 		C7E1A9841E172CF300FD6851 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7E1A9831E172CF300FD6851 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		C72C45201E292450000D0A90 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C737D4291E2A077100080150 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		C737D42B1E2A132D00080150 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		C74B1E8C1E30886D001DD3CB /* MovieClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieClient.swift; sourceTree = "<group>"; };
 		C7E1A9791E172CF300FD6851 /* Flicker Swift 3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flicker Swift 3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7E1A97C1E172CF300FD6851 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7E1A9811E172CF300FD6851 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,11 +96,12 @@
 				C7E1A9851E172CF300FD6851 /* LaunchScreen.storyboard */,
 				C7E1A9881E172CF300FD6851 /* Info.plist */,
 				C7E1A98E1E172FF000FD6851 /* Movie.swift */,
-				C7E1A9941E17347700FD6851 /* MoviesViewController.swift */,
 				C7E1A9971E17349B00FD6851 /* MovieCell.swift */,
+				C7E1A9941E17347700FD6851 /* MoviesViewController.swift */,
 				C72C45201E292450000D0A90 /* DetailViewController.swift */,
 				C737D4291E2A077100080150 /* MainTabController.swift */,
 				C737D42B1E2A132D00080150 /* InfiniteScrollActivityView.swift */,
+				C74B1E8C1E30886D001DD3CB /* MovieClient.swift */,
 			);
 			path = "Flicker Swift 3";
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				C7E1A97D1E172CF300FD6851 /* AppDelegate.swift in Sources */,
 				C737D42C1E2A132D00080150 /* InfiniteScrollActivityView.swift in Sources */,
 				C7E1A98F1E172FF000FD6851 /* Movie.swift in Sources */,
+				C74B1E8D1E30886D001DD3CB /* MovieClient.swift in Sources */,
 				C737D42A1E2A077100080150 /* MainTabController.swift in Sources */,
 				C72C45211E292450000D0A90 /* DetailViewController.swift in Sources */,
 				C7E1A9981E17349B00FD6851 /* MovieCell.swift in Sources */,
