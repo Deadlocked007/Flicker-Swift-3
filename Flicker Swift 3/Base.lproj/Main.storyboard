@@ -47,8 +47,8 @@
                                 <connections>
                                     <outlet property="posterView" destination="wx4-3n-iMA" id="xJI-WZ-wAv"/>
                                     <segue destination="wXq-CU-1NH" kind="show" identifier="detailSegue" id="T7B-dC-7xm">
-                                        <segue key="commit" inheritsFrom="parent" id="cHL-rI-LdY"/>
-                                        <segue key="preview" inheritsFrom="commit" id="PNY-4F-SCw"/>
+                                        <segue key="commit" inheritsFrom="parent" id="bRd-qq-vcy"/>
+                                        <segue key="preview" inheritsFrom="commit" id="5rk-L4-CwY"/>
                                     </segue>
                                 </connections>
                             </collectionViewCell>
@@ -237,7 +237,19 @@
                             <constraint firstItem="n6m-hq-oX1" firstAttribute="top" secondItem="chE-mQ-vc3" secondAttribute="bottom" id="vt8-iO-pbX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="wOJ-OV-f6a"/>
+                    <navigationItem key="navigationItem" id="hB2-eh-oeW">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="L1e-9u-TEM">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7Kn-Ty-PCh">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="Rate"/>
+                                <connections>
+                                    <action selector="onRate:" destination="wXq-CU-1NH" eventType="touchUpInside" id="v6o-6b-sqt"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1500"/>
                     <connections>
@@ -260,13 +272,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TKh-Xb-VQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1688.8" y="540.62968515742136"/>
+            <point key="canvasLocation" x="2628" y="540.62968515742136"/>
         </scene>
         <!--Now Playing-->
         <scene sceneID="HAn-tG-apM">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F1V-s6-Gdb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="GvF-9X-1NR"/>
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="nowplaying" selectedImage="nowplaying" id="GvF-9X-1NR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zl0-QR-00j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -293,6 +305,7 @@
                     <connections>
                         <segue destination="F1V-s6-Gdb" kind="relationship" relationship="viewControllers" id="LIL-S5-ZTa"/>
                         <segue destination="8qF-D7-gRC" kind="relationship" relationship="viewControllers" id="Sdf-KJ-Fev"/>
+                        <segue destination="7wa-IB-EcL" kind="relationship" relationship="viewControllers" id="OZt-Ny-kpN"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RJ0-nH-W7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -358,11 +371,57 @@
             </objects>
             <point key="canvasLocation" x="870" y="864"/>
         </scene>
+        <!--Flicker-->
+        <scene sceneID="KxP-so-ftS">
+            <objects>
+                <tableViewController id="BGx-Up-FaR" customClass="GenresViewController" customModule="Flicker_Swift_3" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ekR-Ex-hLm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ARM-UI-cpb" style="IBUITableViewCellStyleDefault" id="XJv-Y8-4fl">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XJv-Y8-4fl" id="Qnp-y8-xsc">
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ARM-UI-cpb">
+                                            <rect key="frame" x="15" y="0.0" width="325" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="JUz-do-Fi6" kind="show" identifier="genreSegue" id="gCA-rG-Nzx">
+                                        <segue key="commit" inheritsFrom="parent" id="T1j-IZ-z6U"/>
+                                        <segue key="preview" inheritsFrom="commit" id="C16-Ts-WR5"/>
+                                    </segue>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="BGx-Up-FaR" id="avy-04-rZ6"/>
+                            <outlet property="delegate" destination="BGx-Up-FaR" id="h9U-7U-5vX"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Flicker" id="0Vi-1f-Ru0"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zfh-Mc-Bsg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="870" y="1531"/>
+        </scene>
         <!--Top Rated-->
         <scene sceneID="8Fz-9i-OqH">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8qF-D7-gRC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Top Rated" id="xOK-Nz-eel"/>
+                    <tabBarItem key="tabBarItem" title="Top Rated" image="toprated" selectedImage="toprated" id="xOK-Nz-eel"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jfi-PW-f9R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -377,11 +436,93 @@
             </objects>
             <point key="canvasLocation" x="70" y="864"/>
         </scene>
+        <!--Genres-->
+        <scene sceneID="Vfm-Od-tbK">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7wa-IB-EcL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Genres" image="genre" id="Rw6-CI-rND"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HA3-xy-dNv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BGx-Up-FaR" kind="relationship" relationship="rootViewController" id="xOV-JV-zgI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wu2-Ia-zoG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="70" y="1532"/>
+        </scene>
+        <!--Flicker-->
+        <scene sceneID="96o-wo-4cZ">
+            <objects>
+                <collectionViewController restorationIdentifier="genre" id="JUz-do-Fi6" customClass="MoviesViewController" customModule="Flicker_Swift_3" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="WOk-s7-S9c">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="HOW-8x-Kup">
+                            <size key="itemSize" width="181" height="252"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCell" id="LS0-FL-K24" customClass="MovieCell" customModule="Flicker_Swift_3" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="181" height="252"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="181" height="252"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PT1-Lo-S9P">
+                                            <rect key="frame" x="0.0" y="0.0" width="181" height="252"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="PT1-Lo-S9P" firstAttribute="top" secondItem="LS0-FL-K24" secondAttribute="top" id="Ezo-kg-qBD"/>
+                                    <constraint firstAttribute="trailing" secondItem="PT1-Lo-S9P" secondAttribute="trailing" id="aWI-jn-wz6"/>
+                                    <constraint firstAttribute="bottom" secondItem="PT1-Lo-S9P" secondAttribute="bottom" id="eb0-sN-eyS"/>
+                                    <constraint firstItem="PT1-Lo-S9P" firstAttribute="leading" secondItem="LS0-FL-K24" secondAttribute="leading" id="yo0-00-jUw"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="posterView" destination="PT1-Lo-S9P" id="UI9-qX-ISU"/>
+                                    <segue destination="wXq-CU-1NH" kind="show" id="9Xh-Xu-D9v">
+                                        <segue key="commit" inheritsFrom="parent" id="KvZ-mi-OWK"/>
+                                        <segue key="preview" inheritsFrom="commit" id="h20-zs-raZ"/>
+                                    </segue>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="JUz-do-Fi6" id="1TX-6K-JBd"/>
+                            <outlet property="delegate" destination="JUz-do-Fi6" id="fV5-XH-zRv"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Flicker" id="H4D-jq-9tT">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="ddn-FN-Jdx">
+                            <connections>
+                                <action selector="onSearch:" destination="JUz-do-Fi6" id="ClW-0U-9sG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="esW-XS-OcR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1676" y="1531"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="genre" width="20" height="20"/>
+        <image name="nowplaying" width="25" height="25"/>
+        <image name="toprated" width="20" height="20"/>
         <image name="wow" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qJa-L1-Szn"/>
+        <segue reference="gCA-rG-Nzx"/>
+        <segue reference="9Xh-Xu-D9v"/>
     </inferredMetricsTieBreakers>
 </document>

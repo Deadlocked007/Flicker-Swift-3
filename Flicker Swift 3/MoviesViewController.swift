@@ -24,13 +24,13 @@ class MoviesViewController: UICollectionViewController, UICollectionViewDelegate
     var loadingMoreView:InfiniteScrollActivityView?
     var page = 1
     
-    var baseURL = "now_playing"
+    var baseURL = "movie/now_playing"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(baseURL)
         if self.restorationIdentifier! == "TopRated" {
-            baseURL = "top_rated"
+            baseURL = "movie/top_rated"
         }
         
         // Uncomment the following line to preserve selection between presentations

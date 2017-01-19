@@ -39,6 +39,9 @@ class DetailViewController: UIViewController {
     
     var movies: [Movie?] = []
     
+    let stepper = UIStepper()
+    let number = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -147,6 +150,7 @@ class DetailViewController: UIViewController {
         }
         
         titleLabel.text = movie.title
+        self.navigationItem.title = movie.title
         localLabel.text = movie.language
         overviewLabel.text = movie.overview
         overviewLabel.adjustsFontSizeToFitWidth = true
@@ -177,6 +181,42 @@ class DetailViewController: UIViewController {
 
         loadCollectionView()
         
+    }
+    
+    @IBAction func onRate(_ sender: Any) {
+        let errorAlert = UIAlertController(title: movie?.title, message: "What would you like to rate this movie?\n\n", preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let rate = UIAlertAction(title: "Rate", style: .default) { (alert) in
+            //rate()
+            MovieClient.shared.rateMovie(id: "\(self.id!)", rating: self.stepper.value)
+        }
+        
+        self.stepper.frame = CGRect(x: 12.0, y: 70, width: 100.0, height: 10.0)
+        self.stepper.maximumValue = 10
+        self.stepper.minimumValue = 0
+        self.stepper.value = 0
+        self.stepper.addTarget(self, action: #selector(DetailViewController.rateChange), for: .valueChanged)
+        
+        number.text = "\(self.stepper.value)"
+        number.font = UIFont(name: number.font.fontName, size: 20)
+        
+        number.frame = CGRect(x: 12 + stepper.bounds.width + 50, y: 70, width: 100.0, height: 50)
+        number.sizeToFit()
+        
+        errorAlert.view.addSubview(stepper)
+        errorAlert.view.addSubview(number)
+        
+        errorAlert.addAction(cancel)
+        errorAlert.addAction(rate)
+        
+        self.present(errorAlert, animated: true, completion: nil)
+    }
+    
+    func rateChange() {
+        number.text = "\(stepper.value)"
+        number.sizeToFit()
     }
     
     override func didReceiveMemoryWarning() {
@@ -214,7 +254,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func loadMovies() {
-        MovieClient.shared.getMovies(endpoint: "\(id!)/similar", page: 1, success: { (movies) in
+        MovieClient.shared.getMovies(endpoint: "movie/\(id!)/similar", page: 1, success: { (movies) in
             self.movies = self.movies + movies
             self.relatedCollectionView?.reloadData()
             
@@ -240,6 +280,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
+        print(movies.count)
         return movies.count
     }
     
